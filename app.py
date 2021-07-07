@@ -34,7 +34,9 @@ def data():
     
     conn.close()
     
-    return jsonify(df)
+    accident_dict = df.to_dict(orient='index')
+    
+    return jsonify(accident_dict)
 
 
 if __name__ == '__main__':
