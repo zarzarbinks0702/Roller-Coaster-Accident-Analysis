@@ -1,5 +1,5 @@
 //import data from flask
 
-d3.json('/accidents').then((accidents) => {
-  console.log(accidents);
+d3.json("/getData").then(function(data){
+    console.log(data);
 })
