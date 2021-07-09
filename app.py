@@ -29,10 +29,14 @@ def getData():
 # ADD MORE ENDPOINTS
 ###########################################
 #approute for bar chart
+@app.route("/barChart", methods=["GET"])
+def barChart():
+    
+    return barData
 #app route for scatterplot
 #app route for piechart
 #app route for map
-#app route for table
+#app route for table - uses /getdata
 #############################################################
 @app.after_request
 def add_header(r):
