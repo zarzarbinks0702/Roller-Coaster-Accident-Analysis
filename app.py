@@ -31,11 +31,20 @@ def getData():
 #approute for bar chart
 @app.route("/barChart", methods=["GET"])
 def barChart():
-    
+
     return barData
 #app route for scatterplot
 #app route for piechart
 #app route for map
+@app.route('/map', methods=['GET'])
+def buildMap():
+    accidents_by_state = df.groupby('acc_state').size()
+    acc_by_state = []
+    for state, acc in accidents_by_state.items():
+        state_sum = {'id': f'US.{state}',
+                     'value': acc}
+        acc_by_state.append(state_sum)
+    return jsonify(acc_by_state)
 #app route for table - uses /getdata
 #############################################################
 @app.after_request
