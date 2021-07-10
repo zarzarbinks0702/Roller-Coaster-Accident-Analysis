@@ -15,14 +15,7 @@ function createMap() {
       series.geoIdField('id');
 
       //set colors
-      ordinalScale = anychart.scales.ordinalColor([
-          {less: 20},
-          {from: 20, to: 50},
-          {from: 50, to: 250},
-          {from: 250, to: 1000},
-          {greater:1000}
-      ]);
-      ordinalScale.colors(['rgb(218,248,227)','rgb(151,235,219)', 'rgb(0,194,199)', 'rgb(0,134,173)', ' 	(0,85,130)']);
+      series.colorScale(anychart.scales.linearColor('#97ebdb','#005582'));
 
       map.geoData(anychart.maps['united_states_of_america']);
       map.container('map');
