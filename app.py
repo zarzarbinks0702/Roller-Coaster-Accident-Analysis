@@ -29,12 +29,25 @@ def getData():
 # ADD MORE ENDPOINTS
 ###########################################
 #approute for bar chart
-@app.route("/barChart", methods=["GET"])
+@app.route("/bar", methods=["GET"])
 def barChart():
 
     return barData
 #app route for scatterplot
+@app.route("/scatter", methods=["GET"])
+def scatterPlot():
+
+    return scatterData
 #app route for piechart
+@app.route("/pie", methods=["GET"])
+def pieChart():
+    device_category_pie = df["device_category"].value_counts()
+    acc_by_device = []
+    for device, acc in device_category_pie.items():
+        device_sum = {'device': device,
+                     'numAccs': acc}
+        acc_by_device.append(device_sum)
+    return pieData
 #app route for map
 @app.route('/map', methods=['GET'])
 def buildMap():
