@@ -15,7 +15,16 @@ function createMap() {
       series.geoIdField('id');
 
       //set colors
-      series.colorScale(anychart.scales.linearColor('#97ebdb','#005582'));
+      ordinalScale = anychart.scales.ordinalColor([
+          {less: 20},
+          {from: 20, to: 50},
+          {from: 50, to: 250},
+          {from: 250, to: 1000},
+          {greater:1000}
+      ]);
+      ordinalScale.colors(['#daf8e3','#97ebdb', '#00c2c7', '#0086ad', '#005582']);
+
+      series.colorScale(ordinalScale);
 
       map.geoData(anychart.maps['united_states_of_america']);
       map.container('map');
@@ -26,6 +35,7 @@ function createMap() {
           e.getData("value")
       });
       map.legend(true);
+      map.legend().itemsSourceMode('categories');
       map.draw();
     })
   });
