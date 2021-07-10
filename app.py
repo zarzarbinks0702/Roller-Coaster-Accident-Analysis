@@ -47,7 +47,7 @@ def pieChart():
         device_sum = {'device': device,
                      'numAccs': acc}
         acc_by_device.append(device_sum)
-    return pieData
+    return jsonify(pieData)
 #app route for map
 @app.route('/map', methods=['GET'])
 def buildMap():
