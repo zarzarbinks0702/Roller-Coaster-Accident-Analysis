@@ -5,7 +5,7 @@ d3.json("/getData").then(function(data){
 })
 
 function createMap() {
-  d3.json('/map').then((data) => {
+  d3.json('/USmap').then((data) => {
     //used anychart docs for this section
     anychart.onDocumentReady(function () {
       var map = anychart.map();
@@ -14,6 +14,18 @@ function createMap() {
       var series = map.choropleth(accData);
       series.geoIdField('id');
 
+      series.listen('click', function(s) {
+        d3.json('/stateTable').then((data) => {
+          d3.select("#state")
+            .selectAll("tr")
+            .data(data)
+            .enter()
+            .append("tr")
+            .html(function(d) {
+              return `<td>${d.acc_city}</td><td>${d.acc_date}</td><td>${d.device_type}</td><td>${d.acc_desc}</td>`;
+            });
+          })
+        })
       //set colors
       ordinalScale = anychart.scales.ordinalColor([
           {less: 20},
@@ -37,7 +49,22 @@ function createMap() {
       map.legend(true);
       map.legend().itemsSourceMode('categories');
       map.draw();
-    })
+      return map;
+    });
   });
 }
+
 createMap();
+
+function stateTable() {
+  d3.json('/stateTable').then((data) => {
+    d3.select("#state")
+      .selectAll("tr")
+      .data(data)
+      .enter()
+      .append("tr")
+      .html(function(d) {
+        return `<td>${d.acc_city}</td><td>${d.acc_date}</td><td>${d.device_type}</td><td>${d.acc_desc}</td>`;
+      });
+  })
+};

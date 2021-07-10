@@ -1,23 +1,26 @@
-#map {
-  width: 800px;
-  height: 600px;
-  margin: 100;
-  padding: 50;
-  align-content: center;
-}
-
 .jumbotron {
   background-color: #00c2c7;
   width: 100%;
   margin: 0;
   padding: 0;
-  height: 100px;
+  height: 125px;
   text-align: center;
 }
 
 .jumbotron h1 {
   font-size: 60px;
-  position: absolute;
-  margin-top: 10px;
-  margin-left: 17%;
+}
+
+.col-sm-12 {
+  text-align: center;
+}
+
+.map {
+  width: 100%;
+  height: 600px;
+  margin: 100;
+  padding: 50;
+  text-align: center;
+  flex-wrap: wrap;
+  display: inline-flex;
 }

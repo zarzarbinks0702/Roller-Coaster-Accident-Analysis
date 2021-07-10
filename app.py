@@ -49,7 +49,7 @@ def pieChart():
         acc_by_device.append(device_sum)
     return jsonify(pieData)
 #app route for map
-@app.route('/map', methods=['GET'])
+@app.route('/USmap', methods=['GET'])
 def buildMap():
     accidents_by_state = df.groupby('acc_state').size()
     acc_by_state = []
