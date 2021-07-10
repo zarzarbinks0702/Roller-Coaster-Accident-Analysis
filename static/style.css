@@ -5,3 +5,19 @@
   padding: 50;
   align-content: center;
 }
+
+.jumbotron {
+  background-color: #00c2c7;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  text-align: center;
+}
+
+.jumbotron h1 {
+  font-size: 60px;
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 17%;
+}
