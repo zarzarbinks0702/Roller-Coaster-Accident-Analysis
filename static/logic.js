@@ -14,18 +14,6 @@ function createMap() {
       var series = map.choropleth(accData);
       series.geoIdField('id');
 
-      series.listen('click', function(s) {
-        d3.json('/stateTable').then((data) => {
-          d3.select("#state")
-            .selectAll("tr")
-            .data(data)
-            .enter()
-            .append("tr")
-            .html(function(d) {
-              return `<td>${d.acc_city}</td><td>${d.acc_date}</td><td>${d.device_type}</td><td>${d.acc_desc}</td>`;
-            });
-          })
-        })
       //set colors
       ordinalScale = anychart.scales.ordinalColor([
           {less: 20},
@@ -53,18 +41,4 @@ function createMap() {
     });
   });
 }
-
 createMap();
-
-function stateTable() {
-  d3.json('/stateTable').then((data) => {
-    d3.select("#state")
-      .selectAll("tr")
-      .data(data)
-      .enter()
-      .append("tr")
-      .html(function(d) {
-        return `<td>${d.acc_city}</td><td>${d.acc_date}</td><td>${d.device_type}</td><td>${d.acc_desc}</td>`;
-      });
-  })
-};
