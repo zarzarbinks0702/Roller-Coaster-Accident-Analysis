@@ -43,10 +43,10 @@ const data = [
   
   const colors = [ '#caf1ff', '#a2e6ff', '#7bdbff', '#54d1ff', '#2dc6ff', '#05bcff', '#22bdf6', '#34b5e4', '#45add3', '#57a4c1']
   
-  const width = 571,
-    chartWidth = 189,
-    chartHeight = 189,
-    height = 378,
+  const width = 771,
+    chartWidth = 389,
+    chartHeight = 389,
+    height = 578,
     radius = Math.min(chartWidth, chartHeight) / 2,
     innerRadius = radius - radius + 50;
   
