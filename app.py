@@ -25,7 +25,7 @@ def home():
 def getData():
     accident_dict = df.to_dict(orient='index')
     accidents = jsonify(accident_dict)
-    return accidents # send to javascript as JSON
+    return accidents
 ####################################
 # ADD MORE ENDPOINTS
 ###########################################
@@ -103,6 +103,7 @@ def buildMap():
                      'value': acc}
         acc_by_state.append(state_sum)
     return jsonify(acc_by_state)
+
 #app route for table - uses /getdata
 #############################################################
 @app.after_request

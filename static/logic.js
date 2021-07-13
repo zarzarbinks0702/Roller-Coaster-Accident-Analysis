@@ -5,6 +5,7 @@ d3.json("/getData").then(function(data){
 })
 
 function createMap() {
+  //get the data for the map from the flask app
   d3.json('/USmap').then((data) => {
     //used anychart docs for this section
     anychart.onDocumentReady(function () {
@@ -25,23 +26,27 @@ function createMap() {
       ordinalScale.colors(['#daf8e3','#97ebdb', '#00c2c7', '#0086ad', '#005582']);
 
       series.colorScale(ordinalScale);
-
+      //get us map background
       map.geoData(anychart.maps['united_states_of_america']);
       map.container('map');
 
-      // enable the tooltips and format them at once
+      //enable the tooltips and format them at once (still in anychart)
       series.tooltip().format(function(e){
          return "Number of Accidents: " +"\n"+
           e.getData("value")
       });
+      //create legend
       map.legend(true);
       map.legend().itemsSourceMode('categories');
+      //draw map
       map.draw();
       return map;
     });
   });
 }
+//put map on page
 createMap();
+
 
 function createScatter() {
   d3.json("/scatter").then((data) => {
@@ -151,3 +156,104 @@ var chartGroup = svg.append("g")
     });
 }
 createBar();
+
+function createPie() {
+  //the pie data
+  const data = [
+      {
+        label: 'water slide 23%',
+        cases: 3530,
+      },
+      {
+        label: 'coaster 18%',
+        cases: 2748,
+      },
+      {
+        label: 'spinning 13%',
+        cases: 1988,
+      },
+      {
+        label: 'go-kart 12%',
+        cases: 1767,
+      },
+      {
+        label: 'other attraction 10%',
+        cases: 1477,
+        },
+      {
+        label: 'water ride 8%',
+        cases: 1163,
+      },
+      {
+        label: 'cars & track rides 7%',
+        cases: 1025,
+      },
+      {
+        label: 'aquatic play 4%',
+        cases: 465,
+      },
+      {
+        label: 'play equipment 3%',
+        cases: 403,
+      },
+      {
+        label: 'pendulum 2%',
+        cases: 318,
+      },
+    ];
+    //colors for the pie chart
+    const colors = [ '#caf1ff', '#a2e6ff', '#7bdbff', '#54d1ff', '#2dc6ff', '#05bcff', '#22bdf6', '#34b5e4', '#45add3', '#57a4c1'];
+
+    var width = 771,
+      chartWidth = 389,
+      chartHeight = 389,
+      height = 578,
+      radius = Math.min(chartWidth, chartHeight) / 2,
+      innerRadius = radius - radius + 50;
+
+
+
+    var svg = d3.select('#donut-chart')
+      .attr('width', width)
+      .attr('height', height);
+
+    var arc = d3.arc()
+      .innerRadius(innerRadius)
+      .outerRadius(radius);
+
+    var pie = d3.pie().value(d => d.cases);
+
+    var arcGroup = svg
+      .append('g')
+      .attr('transform', `translate(${chartWidth / 2},${chartHeight / 2})`)
+      .attr('class', 'arc-group');
+
+    arcGroup
+      .selectAll('.arc')
+      .data(pie(data))
+      .enter()
+      .append('g')
+      .attr('class', 'arc-group')
+      .append('path')
+      .attr('class', 'arc')
+      .attr('d', arc)
+      .attr('fill', (d, i) => colors[i])
+      .on('mousemove', () => {
+        var {clientX, clientY} = d3.event;
+        d3.select('.tooltip')
+          .attr('transform', `translate(${clientX} ${clientY})`);
+      })
+      .on('mouseenter', d => {
+        d3.select('.tooltip').append('text')
+          .text(`${d.data.label} = ${d.data.cases} accidents`);
+      })
+      .on('mouseleave', () => d3.select('.tooltip text').remove());
+    //create tooltip
+    var tooltipGroup = svg
+      .append('g')
+      .attr('class', 'tooltip');
+
+
+}
+//put pie chart on page
+createPie();
