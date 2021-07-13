@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import os
 import sqlite3 as sql
+import sys 
 
 #init app and class
 app = Flask(__name__)
@@ -38,12 +39,23 @@ def boxPlot():
     agegroup['AgeGroup'] = pd.cut(agegroup['age_youngest'], bins=bins, labels=labels, right=False)
     boxchartdf = agegroup.groupby(['AgeGroup','gender']).num_injured.sum().reset_index()
     boxData = []
+
     for index, row in boxchartdf.iterrows():
         box_plot = {'age_group': row['AgeGroup'],
                     'gender': row['gender'],
                     'numInjured': row['num_injured']}
         boxData.append(box_plot)
-    return jsonify(boxData)
+
+
+    stackdata = []
+    accidents_byage_bygender = boxchartdf.groupby("AgeGroup")
+    for index, row in accidents_byage_bygender: 
+        e = {"AgeGroup":row["AgeGroup"], "Maccidents":row["M"],"Faccidents":row["F"],"Uaccidents":row["U"]}
+    print(accidents_byage_bygender.groups, file = sys.stderr) 
+    # return jsonify(boxData)
+    return 'ok'
+
+
 #app route for bar chart
 @app.route("/bar", methods=["GET"])
 def barChart():
