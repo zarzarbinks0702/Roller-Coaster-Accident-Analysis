@@ -5,7 +5,7 @@ d3.json("/getData").then(function(data){
 })
 
 function createMap() {
-  d3.json('/map').then((data) => {
+  d3.json('/USmap').then((data) => {
     //used anychart docs for this section
     anychart.onDocumentReady(function () {
       var map = anychart.map();
@@ -22,7 +22,9 @@ function createMap() {
           {from: 250, to: 1000},
           {greater:1000}
       ]);
-      ordinalScale.colors(['rgb(218,248,227)','rgb(151,235,219)', 'rgb(0,194,199)', 'rgb(0,134,173)', ' 	(0,85,130)']);
+      ordinalScale.colors(['#daf8e3','#97ebdb', '#00c2c7', '#0086ad', '#005582']);
+
+      series.colorScale(ordinalScale);
 
       map.geoData(anychart.maps['united_states_of_america']);
       map.container('map');
@@ -33,8 +35,10 @@ function createMap() {
           e.getData("value")
       });
       map.legend(true);
+      map.legend().itemsSourceMode('categories');
       map.draw();
-    })
+      return map;
+    });
   });
 }
 createMap();

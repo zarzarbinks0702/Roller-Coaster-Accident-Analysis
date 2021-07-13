@@ -29,10 +29,6 @@ def getData():
 ####################################
 # ADD MORE ENDPOINTS
 ###########################################
-<<<<<<< Updated upstream
-#approute for bar chart
-@app.route("/barChart", methods=["GET"])
-=======
 #app route for boxplot
 @app.route("/box", methods=["GET"])
 def boxPlot():
@@ -43,11 +39,13 @@ def boxPlot():
     agegroup['AgeGroup'] = pd.cut(agegroup['age_youngest'], bins=bins, labels=labels, right=False)
     boxchartdf = agegroup.groupby(['AgeGroup','gender']).num_injured.sum().reset_index()
     boxData = []
-    for index, row in boxchartdf:
+
+    for index, row in boxchartdf.iterrows():
         box_plot = {'age_group': row['AgeGroup'],
                     'gender': row['gender'],
                     'numInjured': row['num_injured']}
         boxData.append(box_plot)
+
 
     stackdata = []
     accidents_byage_bygender = boxchartdf.groupby("AgeGroup")
@@ -57,16 +55,46 @@ def boxPlot():
     # return jsonify(boxData)
     return 'ok'
 
+
 #app route for bar chart
 @app.route("/bar", methods=["GET"])
->>>>>>> Stashed changes
 def barChart():
-
-    return barData
+    barchartDF = pd.DataFrame(df, columns = ["gender","age_youngest", "num_injured","year"])
+    barData = []
+    for index, row in barchartDF.iterrows():
+        bar_data = {'gender': row['gender'],
+                    'age': row['age_youngest'],
+                    'numInjured': row['num_injured'],
+                    'year': row['year']}
+        barData.append(bar_data)
+    return jsonify(barData)
 #app route for scatterplot
+@app.route("/scatter", methods=["GET"])
+def scatterPlot():
+    moddedDF = df[["age_youngest","num_injured","gender","year"]]
+    agegroup = moddedDF[["age_youngest","num_injured","gender","year"]]
+    bins= [0,1,11,21,31,41,51,61,200]
+    labels = ['0','01-10','11-20','21-30','31-40','41-50','51-60','60+']
+    agegroup['AgeGroup'] = pd.cut(agegroup['age_youngest'], bins=bins, labels=labels, right=False)
+    scatterdf = agegroup.groupby('age_youngest').num_injured.sum().reset_index()
+    scatterData = []
+    for index, row in scatterdf.iterrows():
+        scatter_plot = {'age_youngest': row['age_youngest'],
+                    'numInjured': row['num_injured']}
+        scatterData.append(scatter_plot)
+    return jsonify(scatterData)
 #app route for piechart
+@app.route("/pie", methods=["GET"])
+def pieChart():
+    device_category_pie = df["device_category"].value_counts()
+    acc_by_device = []
+    for device, acc in device_category_pie.items():
+        device_sum = {'device': device,
+                     'numAccs': acc}
+        acc_by_device.append(device_sum)
+    return jsonify(pieData)
 #app route for map
-@app.route('/map', methods=['GET'])
+@app.route('/USmap', methods=['GET'])
 def buildMap():
     accidents_by_state = df.groupby('acc_state').size()
     acc_by_state = []
