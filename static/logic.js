@@ -238,22 +238,24 @@ function createPie() {
       .attr('class', 'arc')
       .attr('d', arc)
       .attr('fill', (d, i) => colors[i])
-      .on('mousemove', () => {
-        var {clientX, clientY} = d3.event;
-        d3.select('.tooltip')
-          .attr('transform', `translate(${clientX} ${clientY})`);
-      })
-      .on('mouseenter', d => {
-        d3.select('.tooltip').append('text')
-          .text(`${d.data.label} = ${d.data.cases} accidents`);
-      })
-      .on('mouseleave', () => d3.select('.tooltip text').remove());
-    //create tooltip
-    var tooltipGroup = svg
-      .append('g')
-      .attr('class', 'tooltip');
 
 
+    let toolTip = d3.select("body").append("div").attr("class", "tooltip");
+    d3.selectAll(".arc-group").on("mouseover", showToolTip).on("mouseout", hidetooltip);
+    function showToolTip(event, d) {
+      d3.select('.tooltip').append('text')
+        .text(`${d.data.label} = ${d.data.cases} accidents`);
+      toolTip.style("display", "block");
+          }
+    function hidetooltip(e, d) {
+        toolTip.style("display", "none");
+      }
 }
 //put pie chart on page
 createPie();
+
+function createTable() {
+
+}
+createTable();=======
+      

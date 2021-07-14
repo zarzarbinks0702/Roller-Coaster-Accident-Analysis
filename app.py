@@ -71,7 +71,16 @@ def buildMap():
         acc_by_state.append(state_sum)
     return jsonify(acc_by_state)
 
-#app route for table - uses /getdata
+
+#app route for table
+@app.route('/table', methods=['GET'])
+def buildTable():
+    accident_dict = df.to_dict(orient='index')
+    accidents = []
+    for key, value in accident_dict.items():
+        accidents.append(value)
+    return jsonify(accidents)
+
 #############################################################
 @app.after_request
 def add_header(r):
