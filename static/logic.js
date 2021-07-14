@@ -1,5 +1,4 @@
 //import data from flask
-
 d3.json("/getData").then(function(data){
     console.log(data);
 })
@@ -51,42 +50,43 @@ createMap();
 function createScatter() {
   d3.json("/scatter").then((data) => {
     var ages = [];
-var injuries = [];
+    var injuries = [];
 
-for (const entry of data) {
-    if(entry.age_youngest <1 || entry.age_youngest >100) continue;
-    ages.push(entry.age_youngest);
-    injuries.push(entry.numInjured);
-}
+    for (const entry of data) {
+        if(entry.age_youngest <1 || entry.age_youngest >100) continue;
+        ages.push(entry.age_youngest);
+        injuries.push(entry.numInjured);
+    }
 
-var trace1 = {
-  type: "scatter",
-  mode: "markers",
-  name: "Injuries vs Age Category",
-  x: ages,
-  y: injuries,
-  line: {
-    color: "#17BECF",
-  },
-};
+    var trace1 = {
+      type: "scatter",
+      mode: "markers",
+      name: "Injuries vs Age Category",
+      x: ages,
+      y: injuries,
+      line: {
+        color: "#17BECF",
+      },
+    };
 
-var data1 = [trace1];
-var minAge = 1;
-var maxAge = 100;
+    var data1 = [trace1];
+    var minAge = 1;
+    var maxAge = 100;
 
-var layout = {
-  title: `Number of Injuries based by Age (1986-2009)`,
-  xaxis: {
-    range: [minAge, maxAge],
-    type: "number",
-  },
-  yaxis: {
-    autorange: true,
-    type: "linear",
-  },
-};
+    var layout = {
+      xaxis: {
+        range: [minAge, maxAge],
+        type: "number",
+        title: 'Age'
+      },
+      yaxis: {
+        autorange: true,
+        type: "linear",
+        title: 'Number of Injuries'
+      },
+    };
 
-Plotly.newPlot("scatter", data1, layout);
+    Plotly.newPlot("scatter", data1, layout);
 
   });
 }

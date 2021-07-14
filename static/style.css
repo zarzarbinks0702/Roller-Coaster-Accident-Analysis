@@ -21,13 +21,6 @@
   text-align: center;
 }
 
-.map-and-table {
-  display: flex;
-}
-
-.thead-light {
-  background-color: #daf8e3;
-}
 .col-sm-4 {
   text-align: center;
   align-items: center;
@@ -44,4 +37,13 @@
 
 .arc:focus {
   outline: none;
+}
+
+.chart {
+  display: flex;
+}
+
+#scatter {
+  width: 100%;
+  height: 600px;
 }

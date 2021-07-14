@@ -12,6 +12,7 @@
     <script src='https://cdn.anychart.com/geodata/2.1.1/countries/united_states_of_america/united_states_of_america.js' type="text/javascript"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js' type="text/javascript"></script>
     <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js" type="text/javascript"></script>
+    <script src="https://cdn.plot.ly/plotly-2.2.0.min.js"></script>
 </head>
 <body>
   <div class="jumbotron">
@@ -22,14 +23,23 @@
       <h3>Accidents by State</h3>
       <p>Greyed states have no data for accidents in this time frame.</p>
     </div>
-  <div class="pie col-sm-4">
-    <h3>Top 10 Rides for Accidents</h3>
-    <svg id="donut-chart"></svg>
+  <div class="chart row">
+    <div class="col-sm-4">
+      <h3>Bar Chart</h3>
+      <div id="bar"></div>
+    </div>
+    <div class="pie col-sm-4">
+      <h3>Top 10 Rides for Accidents</h3>
+      <svg id="donut-chart"></svg>
+    </div>
+    <div class="col-sm-4">
+      <h3>Number of Injuries by Age</h3>
+      <div id="scatter"></div>
+    </div>
   </div>
+  <div id="table" class="col-sm-12">
 
-  <div id="bar" class="col-sm-4"></div>
-  <div id="scatter" class="col-sm-4"></div>
-  <div id="table" class="col-sm-12"></div>
+  </div>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="static/logic.js"></script>
 </body>
