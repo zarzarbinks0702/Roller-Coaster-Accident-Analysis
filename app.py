@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import os
 import sqlite3 as sql
+import sys
 
 #init app and class
 app = Flask(__name__)
@@ -24,19 +25,43 @@ def home():
 def getData():
     accident_dict = df.to_dict(orient='index')
     accidents = jsonify(accident_dict)
-    return accidents # send to javascript as JSON
+    return accidents
 ####################################
 # ADD MORE ENDPOINTS
 ###########################################
-#approute for bar chart
-@app.route("/barChart", methods=["GET"])
+#app route for bar chart
+@app.route("/bar", methods=["GET"])
 def barChart():
-
-    return barData
+    barchartDF = pd.DataFrame(df, columns = ["gender","age_youngest", "num_injured","year"])
+    barData = barchartDF.to_dict(orient='list')
+    return jsonify(barData)
 #app route for scatterplot
+@app.route("/scatter", methods=["GET"])
+def scatterPlot():
+    moddedDF = df[["age_youngest","num_injured","gender","year"]]
+    agegroup = moddedDF[["age_youngest","num_injured","gender","year"]]
+    bins= [0,1,11,21,31,41,51,61,200]
+    labels = ['0','01-10','11-20','21-30','31-40','41-50','51-60','60+']
+    agegroup['AgeGroup'] = pd.cut(agegroup['age_youngest'], bins=bins, labels=labels, right=False)
+    scatterdf = agegroup.groupby('age_youngest').num_injured.sum().reset_index()
+    scatterData = []
+    for index, row in scatterdf.iterrows():
+        scatter_plot = {'age_youngest': row['age_youngest'],
+                    'numInjured': row['num_injured']}
+        scatterData.append(scatter_plot)
+    return jsonify(scatterData)
 #app route for piechart
+@app.route("/pie", methods=["GET"])
+def pieChart():
+    device_category_pie = df["device_category"].value_counts()
+    acc_by_device = []
+    for device, acc in device_category_pie.items():
+        device_sum = {'device': device,
+                     'numAccs': acc}
+        acc_by_device.append(device_sum)
+    return jsonify(pieData)
 #app route for map
-@app.route('/map', methods=['GET'])
+@app.route('/USmap', methods=['GET'])
 def buildMap():
     accidents_by_state = df.groupby('acc_state').size()
     acc_by_state = []
@@ -45,7 +70,17 @@ def buildMap():
                      'value': acc}
         acc_by_state.append(state_sum)
     return jsonify(acc_by_state)
-#app route for table - uses /getdata
+
+
+#app route for table
+@app.route('/table', methods=['GET'])
+def buildTable():
+    accident_dict = df.to_dict(orient='index')
+    accidents = []
+    for key, value in accident_dict.items():
+        accidents.append(value)
+    return jsonify(accidents)
+
 #############################################################
 @app.after_request
 def add_header(r):

@@ -1,11 +1,11 @@
 //import data from flask
-
 d3.json("/getData").then(function(data){
     console.log(data);
 })
 
 function createMap() {
-  d3.json('/map').then((data) => {
+  //get the data for the map from the flask app
+  d3.json('/USmap').then((data) => {
     //used anychart docs for this section
     anychart.onDocumentReady(function () {
       var map = anychart.map();
@@ -22,24 +22,30 @@ function createMap() {
           {from: 250, to: 1000},
           {greater:1000}
       ]);
-      ordinalScale.colors(['rgb(218,248,227)','rgb(151,235,219)', 'rgb(0,194,199)', 'rgb(0,134,173)', ' 	(0,85,130)']);
+      ordinalScale.colors(['#daf8e3','#97ebdb', '#00c2c7', '#0086ad', '#005582']);
 
+      series.colorScale(ordinalScale);
+      //get us map background
       map.geoData(anychart.maps['united_states_of_america']);
       map.container('map');
 
-      // enable the tooltips and format them at once
+      //enable the tooltips and format them at once (still in anychart)
       series.tooltip().format(function(e){
          return "Number of Accidents: " +"\n"+
           e.getData("value")
       });
+      //create legend
       map.legend(true);
+      map.legend().itemsSourceMode('categories');
+      //draw map
       map.draw();
-    })
+      return map;
+    });
   });
 }
+//put map on page
 createMap();
-<<<<<<< Updated upstream
-=======
+
 
 
 function createScatter() {
@@ -153,6 +159,7 @@ var chartGroup = svg.append("g")
 createBar();
 
 function createPie() {
+
   var data = [{
     values: [3530, 2748, 1988, 1767, 1477, 1163, 1025, 465, 403, 318],
     labels: ["water slide", "coaster", "spinning", "go-kart", "other attraction", "water ride", "cars & track rides ", "aquatic play", 
@@ -172,4 +179,11 @@ function createPie() {
   }
   createPie();
   
->>>>>>> Stashed changes
+
+
+function createTable() {
+
+}
+createTable();
+      
+
