@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import os
 import sqlite3 as sql
+import sys
 
 #init app and class
 app = Flask(__name__)
@@ -24,37 +25,15 @@ def home():
 def getData():
     accident_dict = df.to_dict(orient='index')
     accidents = jsonify(accident_dict)
-    return accidents # send to javascript as JSON
+    return accidents
 ####################################
 # ADD MORE ENDPOINTS
 ###########################################
-#app route for boxplot
-@app.route("/box", methods=["GET"])
-def boxPlot():
-    moddedDF = df[["age_youngest","num_injured","gender","year"]]
-    agegroup = moddedDF[["age_youngest","num_injured","gender","year"]]
-    bins= [0,1,11,21,31,41,51,61,200]
-    labels = ['0','01-10','11-20','21-30','31-40','41-50','51-60','60+']
-    agegroup['AgeGroup'] = pd.cut(agegroup['age_youngest'], bins=bins, labels=labels, right=False)
-    boxchartdf = agegroup.groupby(['AgeGroup','gender']).num_injured.sum().reset_index()
-    boxData = []
-    for index, row in boxchartdf.iterrows():
-        box_plot = {'age_group': row['AgeGroup'],
-                    'gender': row['gender'],
-                    'numInjured': row['num_injured']}
-        boxData.append(box_plot)
-    return jsonify(boxData)
 #app route for bar chart
 @app.route("/bar", methods=["GET"])
 def barChart():
     barchartDF = pd.DataFrame(df, columns = ["gender","age_youngest", "num_injured","year"])
-    barData = []
-    for index, row in barchartDF.iterrows():
-        bar_data = {'gender': row['gender'],
-                    'age': row['age_youngest'],
-                    'numInjured': row['num_injured'],
-                    'year': row['year']}
-        barData.append(bar_data)
+    barData = barchartDF.to_dict(orient='list')
     return jsonify(barData)
 #app route for scatterplot
 @app.route("/scatter", methods=["GET"])
@@ -92,6 +71,7 @@ def buildMap():
         acc_by_state.append(state_sum)
     return jsonify(acc_by_state)
 
+
 #app route for table
 @app.route('/table', methods=['GET'])
 def buildTable():
@@ -100,6 +80,7 @@ def buildTable():
     for key, value in accident_dict.items():
         accidents.append(value)
     return jsonify(accidents)
+
 #############################################################
 @app.after_request
 def add_header(r):

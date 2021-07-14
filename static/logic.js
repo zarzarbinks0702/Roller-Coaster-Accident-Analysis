@@ -1,10 +1,10 @@
 //import data from flask
-
 d3.json("/getData").then(function(data){
     console.log(data);
 })
 
 function createMap() {
+  //get the data for the map from the flask app
   d3.json('/USmap').then((data) => {
     //used anychart docs for this section
     anychart.onDocumentReady(function () {
@@ -25,22 +25,25 @@ function createMap() {
       ordinalScale.colors(['#daf8e3','#97ebdb', '#00c2c7', '#0086ad', '#005582']);
 
       series.colorScale(ordinalScale);
-
+      //get us map background
       map.geoData(anychart.maps['united_states_of_america']);
       map.container('map');
 
-      // enable the tooltips and format them at once
+      //enable the tooltips and format them at once (still in anychart)
       series.tooltip().format(function(e){
          return "Number of Accidents: " +"\n"+
           e.getData("value")
       });
+      //create legend
       map.legend(true);
       map.legend().itemsSourceMode('categories');
+      //draw map
       map.draw();
       return map;
     });
   });
 }
+//put map on page
 createMap();
 
 
@@ -236,6 +239,7 @@ function createPie() {
       .attr('d', arc)
       .attr('fill', (d, i) => colors[i])
 
+
     let toolTip = d3.select("body").append("div").attr("class", "tooltip");
     d3.selectAll(".arc-group").on("mouseover", showToolTip).on("mouseout", hidetooltip);
     function showToolTip(event, d) {
@@ -253,4 +257,5 @@ createPie();
 function createTable() {
 
 }
-createTable();
+createTable();=======
+      
