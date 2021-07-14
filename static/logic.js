@@ -93,7 +93,7 @@ function createScatter() {
 createScatter();
 
 function createBar() {
-    d3.json("/box").then((data) => {
+    d3.json("/bar").then((data) => {
         console.log(data)
         var stackdata = []
 
