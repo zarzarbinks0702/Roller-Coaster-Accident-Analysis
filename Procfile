@@ -1,1 +1,1 @@
-web: gunicorn amusement-accident-analysis.app:app 
+web: gunicorn app.py:app 
