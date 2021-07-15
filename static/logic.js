@@ -233,9 +233,3 @@ Plotly.newPlot('table', data, layout);
 });
 }
 createTable();
-<<<<<<< Updated upstream
-=======
-
-
-
->>>>>>> Stashed changes
