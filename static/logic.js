@@ -158,6 +158,24 @@ var chartGroup = svg.append("g")
 createBar();
 
 function createPie() {
+
+  var data = [{
+    values: [3530, 2748, 1988, 1767, 1477, 1163, 1025, 465, 403, 318],
+    labels: ["Water Slide", "Coaster", "Spinning", "Go-Kart", "Other Attraction", "Water Ride", "Cars & Track Rides ", "Aquatic Play",
+    "Play Equipment", "Pendulum"],
+    type: 'pie',
+    marker: {
+      colors: ['#caf1ff', '#a2e6ff', '#7bdbff', '#54d1ff', '#2dc6ff', '#05bcff', '#22bdf6', '#34b5e4', '#45add3', '#57a4c1']
+    },
+  }];
+
+  var layout = {
+    height: 400,
+    width: 500
+  };
+
+  Plotly.newPlot('PieChart', data, layout);
+  }
   //the pie data
   const data = [
       {
@@ -257,5 +275,4 @@ createPie();
 function createTable() {
 
 }
-createTable();=======
-      
+createTable();
