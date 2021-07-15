@@ -179,8 +179,6 @@ function createPie() {
 
   Plotly.newPlot('PieChart', data, layout);
   }
- 
-}
 //put pie chart on page
 createPie();
 
@@ -190,4 +188,3 @@ function createTable() {
 
 }
 createTable();
-
