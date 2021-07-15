@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, send_from_directory, request, flask_sqlalchemy
+from flask import Flask, render_template, jsonify, send_from_directory, request
 import json
 import pandas as pd
 import numpy as np
@@ -9,12 +9,6 @@ import sys
 
 #init app and class
 app = Flask(__name__)
-
-from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
-
-# Remove tracking modifications
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #initiate memory cache of database
 conn = sql.connect('data/amusement_accidents.db')
