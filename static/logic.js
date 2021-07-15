@@ -185,7 +185,7 @@ createPie();
 
 
 function createTable() {
-d3.csv("https://raw.githubusercontent.com/zarzarbinks0702/Roller-Coaster-Accident-Analysis/main/table%20data/reduced_data_frame.csv", function(err, rows){
+d3.csv("https://raw.githubusercontent.com/carvilla333/Data-for-future-use/main/reduced_data_frame.csv", function(err, rows){
 
   function unpack(rows, key) {
   return rows.map(function(row) { return row[key]; });
