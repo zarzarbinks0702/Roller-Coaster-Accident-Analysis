@@ -1,8 +1,3 @@
-//import data from flask
-d3.json("/getData").then(function(data){
-    console.log(data);
-})
-
 function createMap() {
   //get the data for the map from the flask app
   d3.json('/USmap').then((data) => {
@@ -45,8 +40,6 @@ function createMap() {
 }
 //put map on page
 createMap();
-
-
 
 function createScatter() {
   d3.json("/scatter").then((data) => {
@@ -91,6 +84,7 @@ function createScatter() {
 
   });
 }
+//put scatter on page
 createScatter();
 
 function createBar() {
@@ -156,6 +150,7 @@ var chartGroup = svg.append("g")
 
     });
 }
+//put bar chart on page
 createBar();
 
 function createPie() {
@@ -182,54 +177,42 @@ function createPie() {
 //put pie chart on page
 createPie();
 
-
-
 function createTable() {
-d3.csv("https://raw.githubusercontent.com/carvilla333/Data-for-future-use/main/reduced_data_frame.csv", function(err, rows){
+  d3.json('/table').then((data) => {
+    var tableData = data;
+    //table body
+    var tableBody = d3.select('#table');
+    //the filter button
+    var filterBtn = d3.select('#filter-button');
+    //the reset button
+    var resetBtn = d3.select('#reset-button');
+    //the form
+    var form = d3.select('#form');
 
-  function unpack(rows, key) {
-  return rows.map(function(row) { return row[key]; });
-  }
+    //populate the table
+    const tableMaker = (data) => {
+      data.forEach((accs) => {
+        var row = tableBody.append('tr');
+        var city = row.append('td').text(accs.acc_city);
+        var date = row.append('td').text(accs.acc_date);
+        var accsDesc = row.append('td').text(accs.acc_desc);
+        var state = row.append('td').text(accs.acc_state);
+        var youngInjured = row.append('td').text(accs.age_youngest);
+        var busType = row.append('td').text(accs.bus_type);
+        var injCat = row.append('td').text(accs.category);
+        var devCat = row.append('td').text(accs.device_category);
+        var devType = row.append('td').text(accs.device_type);
+        var gender = row.append('td').text(accs.gender);
+        var indusSect = row.append('td').text(accs.industry_sector);
+        var injDesc = row.append('td').text(accs.injury_desc);
+        var manufacturer = row.append('td').text(accs.manufacturer);
+        var numInj = row.append('td').text(accs.num_injured);
+        var tradename = row.append('td').text(accs.tradename_or_generic);
+      })
+    };
 
-  var headerNames = d3.keys(rows[0]);
-
-  var headerValues = [];
-  var cellValues = [];
-  for (i = 0; i < headerNames.length; i++) {
-    headerValue = [headerNames[i]];
-    headerValues[i] = headerValue;
-    cellValue = unpack(rows, headerNames[i]);
-    cellValues[i] = cellValue;
-  }
-
-
-
-var data = [{
-  type: 'table',
-  columnwidth: [50,400,400,400,400,400,400,400],
-  columnorder: [1,2,3,4,5,6,7,8],
-  header: {
-    values: headerValues,
-    align: "center",
-    line: {width: 1, color: 'rgb(50, 50, 50)'},
-    fill: {color: ['#17becf']},
-    font: {family: "Arial", size: 8, color: "white"}
-  },
-  cells: {
-    values: cellValues,
-    align: ["center", "center"],
-    line: {color: "black", width: 1},
-    fill: {color: ['#17becf', 'rgba(228, 222, 249, 0.65)']},
-    font: {family: "Arial", size: 9, color: ["black"]}
-  }
-}]
-
-var layout = {
-  title: "Safer Parks Accident Dataset"
-  
+    tableMaker(tableData);
+    });
 }
-
-Plotly.newPlot('table', data, layout);
-});
-}
+//put table on page
 createTable();
