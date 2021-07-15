@@ -47,6 +47,7 @@ function createMap() {
 createMap();
 
 
+
 function createScatter() {
   d3.json("/scatter").then((data) => {
     var ages = [];
@@ -161,8 +162,10 @@ function createPie() {
 
   var data = [{
     values: [3530, 2748, 1988, 1767, 1477, 1163, 1025, 465, 403, 318],
+
     labels: ["Water Slide", "Coaster", "Spinning", "Go-Kart", "Other Attraction", "Water Ride", "Cars & Track Rides ", "Aquatic Play",
     "Play Equipment", "Pendulum"],
+
     type: 'pie',
     marker: {
       colors: ['#caf1ff', '#a2e6ff', '#7bdbff', '#54d1ff', '#2dc6ff', '#05bcff', '#22bdf6', '#34b5e4', '#45add3', '#57a4c1']
@@ -176,103 +179,15 @@ function createPie() {
 
   Plotly.newPlot('PieChart', data, layout);
   }
-  //the pie data
-  const data = [
-      {
-        label: 'water slide 23%',
-        cases: 3530,
-      },
-      {
-        label: 'coaster 18%',
-        cases: 2748,
-      },
-      {
-        label: 'spinning 13%',
-        cases: 1988,
-      },
-      {
-        label: 'go-kart 12%',
-        cases: 1767,
-      },
-      {
-        label: 'other attraction 10%',
-        cases: 1477,
-        },
-      {
-        label: 'water ride 8%',
-        cases: 1163,
-      },
-      {
-        label: 'cars & track rides 7%',
-        cases: 1025,
-      },
-      {
-        label: 'aquatic play 4%',
-        cases: 465,
-      },
-      {
-        label: 'play equipment 3%',
-        cases: 403,
-      },
-      {
-        label: 'pendulum 2%',
-        cases: 318,
-      },
-    ];
-    //colors for the pie chart
-    const colors = [ '#caf1ff', '#a2e6ff', '#7bdbff', '#54d1ff', '#2dc6ff', '#05bcff', '#22bdf6', '#34b5e4', '#45add3', '#57a4c1'];
-
-    var width = 771,
-      chartWidth = 389,
-      chartHeight = 389,
-      height = 578,
-      radius = Math.min(chartWidth, chartHeight) / 2,
-      innerRadius = radius - radius + 50;
-
-
-
-    var svg = d3.select('#donut-chart')
-      .attr('width', width)
-      .attr('height', height);
-
-    var arc = d3.arc()
-      .innerRadius(innerRadius)
-      .outerRadius(radius);
-
-    var pie = d3.pie().value(d => d.cases);
-
-    var arcGroup = svg
-      .append('g')
-      .attr('transform', `translate(${chartWidth / 2},${chartHeight / 2})`)
-      .attr('class', 'arc-group');
-
-    arcGroup
-      .selectAll('.arc')
-      .data(pie(data))
-      .enter()
-      .append('g')
-      .attr('class', 'arc-group')
-      .append('path')
-      .attr('class', 'arc')
-      .attr('d', arc)
-      .attr('fill', (d, i) => colors[i])
-
-
-    let toolTip = d3.select("body").append("div").attr("class", "tooltip");
-    d3.selectAll(".arc-group").on("mouseover", showToolTip).on("mouseout", hidetooltip);
-    function showToolTip(event, d) {
-      d3.select('.tooltip').append('text')
-        .text(`${d.data.label} = ${d.data.cases} accidents`);
-      toolTip.style("display", "block");
-          }
-    function hidetooltip(e, d) {
-        toolTip.style("display", "none");
-      }
+ 
 }
 //put pie chart on page
 createPie();
+
+
 
 function createTable() {
 
 }
 createTable();
+
