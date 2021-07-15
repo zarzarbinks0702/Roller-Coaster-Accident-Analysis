@@ -32,9 +32,14 @@ def getData():
 #app route for bar chart
 @app.route("/bar", methods=["GET"])
 def barChart():
-    barchartDF = pd.DataFrame(df, columns = ["gender","age_youngest", "num_injured","year"])
-    barData = barchartDF.to_dict(orient='list')
-    return jsonify(barData)
+    moddedDF = df[["age_youngest","num_injured","gender","year"]]
+    boxchartdf = moddedDF.groupby(['gender']).num_injured.sum().reset_index()
+    boxData = []
+    for index, row in boxchartdf.iterrows():
+        box_plot = {'gender': row['gender'],
+                    'numInjured': row['num_injured']}
+        boxData.append(box_plot)
+    return jsonify(boxData)
 #app route for scatterplot
 @app.route("/scatter", methods=["GET"])
 def scatterPlot():
