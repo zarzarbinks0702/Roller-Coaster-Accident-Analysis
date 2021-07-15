@@ -10,7 +10,7 @@ pickleshare==0.7.5
 prompt-toolkit==3.0.18
 psycopg2==2.9.1
 Pygments==2.8.1
-pywin32==300
+pypiwin32==300
 six==1.15.0
 traitlets==5.0.5
 wcwidth==0.2.5
