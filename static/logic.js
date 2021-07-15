@@ -162,28 +162,32 @@ function createPie() {
 
   var data = [{
     values: [3530, 2748, 1988, 1767, 1477, 1163, 1025, 465, 403, 318],
-    labels: ["water slide", "coaster", "spinning", "go-kart", "other attraction", "water ride", "cars & track rides ", "aquatic play", 
-    "play equipment", "pendulum"],
+
+    labels: ["Water Slide", "Coaster", "Spinning", "Go-Kart", "Other Attraction", "Water Ride", "Cars & Track Rides ", "Aquatic Play",
+    "Play Equipment", "Pendulum"],
+
     type: 'pie',
     marker: {
       colors: ['#caf1ff', '#a2e6ff', '#7bdbff', '#54d1ff', '#2dc6ff', '#05bcff', '#22bdf6', '#34b5e4', '#45add3', '#57a4c1']
     },
   }];
-  
+
   var layout = {
     height: 400,
     width: 500
   };
-  
+
   Plotly.newPlot('PieChart', data, layout);
   }
-  createPie();
-  
+ 
+}
+//put pie chart on page
+createPie();
+
 
 
 function createTable() {
 
 }
 createTable();
-      
 
