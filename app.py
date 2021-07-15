@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, send_from_directory, request
+from flask import Flask, render_template, jsonify, send_from_directory, request, flask_sqlalchemy
 import json
 import pandas as pd
 import numpy as np
