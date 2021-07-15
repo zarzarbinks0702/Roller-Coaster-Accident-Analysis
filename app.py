@@ -9,7 +9,6 @@ import sys
 
 #init app and class
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///myDB.db'
 
 #initiate memory cache of database
 conn = sql.connect('data/amusement_accidents.db')
