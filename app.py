@@ -3,12 +3,13 @@ import json
 import pandas as pd
 import numpy as np
 import os
+from os import environ
 import sqlite3 as sql
 import sys
 
 #init app and class
 app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///myDB.db'
 
 #initiate memory cache of database
 conn = sql.connect('data/amusement_accidents.db')
