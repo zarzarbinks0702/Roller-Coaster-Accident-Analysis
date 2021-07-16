@@ -99,6 +99,9 @@ def create_app():
         r.headers["Pragma"] = "no-cache"
         r.headers["Expires"] = "0"
         return r
-#main
-if __name__ == "__main__":
-    app.run(debug=True)
+
+    #main
+    if __name__ == "__main__":
+        app.run(debug=True)
+
+create_app()
