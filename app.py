@@ -3,12 +3,12 @@ import json
 import pandas as pd
 import numpy as np
 import os
-from os import environ, start_response
+from os import environ
 import sqlite3 as sql
 import sys
 
 #init app and class
-def create_app(x, y):
+def create_app():
     app = Flask(__name__)
 
     #initiate memory cache of database
@@ -104,4 +104,4 @@ def create_app(x, y):
     if __name__ == "__main__":
         app.run(debug=True)
 
-create_app(environ, start_response)
+create_app()
