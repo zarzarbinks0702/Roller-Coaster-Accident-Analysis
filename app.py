@@ -8,7 +8,7 @@ import sqlite3 as sql
 import sys
 
 #init app and class
-def create_app():
+def create_app(x, y):
     app = Flask(__name__)
 
     #initiate memory cache of database
