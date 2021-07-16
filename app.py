@@ -104,4 +104,4 @@ def create_app(x, y):
     if __name__ == "__main__":
         app.run(debug=True)
 
-    return app
+create_app()
